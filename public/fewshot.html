@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OpenAI Chat Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style/style.css">
+    <style>
+        textarea {
+            height: 100px;
+            width: 100%;
+        }
+        #generatedText:empty {
+            visibility: hidden
+        }
+    </style>
+</head>
+<body>
+
+<main>
+<h1>OpenAI Node API Demos : Few Shot Prompting</h1>
+As an example, run this query with or without the checkbox
+
+<h2>Training Examples</h2>
+
+<textarea id="fewshot">
+Fox approached a chicken coop made of metal,he went away mad;
+Fox found a chicken coop made of steel,he left in a huff;
+The fox went to a chicken coop made of materials, he wasnt able to get to the chicken;
+Fox got to a chicken coop made of diamonds, he yelled and went away;
+Fox found chicken hutch made of sticks, he ate the chickens;
+When fox got to a chicken coop made of only feathers, he ate the chickens;
+Fox came across a chicken coop made with foam, he destroyed it and made chicken stew;
+Mr Fox walked up to the bird coop made of old stiff clothes, he easily destroyed it and had a feast;
+When the fox came to a chicken house which made of cotton, he got to chickens and ate them all. Oh no!
+</textarea>
+
+<br>
+<input id="voiceId" type="checkbox" checked style="display:inline-block"> Use the examples as training.
+
+<div class="rightBubble">
+<textarea id="input-text" placeholder="Question / Prompt Here">
+When the fox found a
+chicken coop made of concrete. What happened?</textarea>
+</div>
+
+
+<button id="send-button">Run</button>
+<textarea type="text" id="generatedText"></textarea>
+
+<script>
+    const sendButton = document.getElementById('send-button');
+
+    sendButton.addEventListener('click', async () => {
+        let training = '';
+        if (document.getElementById("voiceId").checked ) {
+            training = document.getElementById('fewshot').value.trim();
+        }
+        const userInput = document.getElementById('input-text').value.trim();
+        const prompt = training + "//" + userInput;
+        console.log(prompt)
+        if (!prompt) {
+            return alert('Please enter a message.');
+        }
+        try {
+            const response = await fetch('/apps/openai-fewshot', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({prompt}), // Send user input to the server
+            })
+
+            const results = await response.json();
+            const element = document.querySelector("#generatedText");
+            element.style.visibility = "visible"
+            element.value = results
+
+        } catch (error) {
+            console.error(error);
+            alert('An error occurred. Please try again.');
+        }
+
+    });
+</script>
+</main>
+</body>
+

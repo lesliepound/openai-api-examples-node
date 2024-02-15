@@ -1,0 +1,25 @@
+
+Prompt engineering,
+Prompt chaining (breaking complex tasks into multiple prompts),
+Function calling
+(prefered over fine tuning.)
+Fine Tuning
+
+
+TTS / STT
+*****************
+The voices are alloy, echo, fable, onyx, nova, and shimmer.
+Previews of the voices are available in the Text to speech guide.
+
+
+Model /Results
+***************
+embeddings:
+fine tuning:
+
+Fine-tuning lets you get more out of the models available through the API by providing:
+-Higher quality results than prompting
+-Ability to train on more examples than can fit in a prompt
+-Token savings due to shorter prompts
+-Lower latency requests
+

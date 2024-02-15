@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OpenAI Chat Demo: Speech Example (TTS)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"  href="/style/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <style>
+        #text-input {
+            background: lightcyan;
+            border-radius: 0em;
+            width: 300px
+        }
+        #audio-player {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+
+<h1>OpenAI Node API Demos: Speech Out (STT)</h1>
+Narrate speech.
+
+
+<select name="voices" id="voices">
+    <option value="alloy">Alloy</option>
+    <option value="echo">Echo</option>
+    <option value="fable">Fable</option>
+    <option value="onyx">Onyx</option>
+    <option value="nova">Nova</option>
+    <option value="shimmer">Shimmer</option>
+</select>
+
+<input type="text" id="text-input">
+
+<button id="send-button">Play</button>
+<audio controls src="/.private/speech.mp3" id="audio-player"></audio>
+<script>
+
+    const sendButton = document.getElementById('send-button');
+
+    sendButton.addEventListener('click', async () => {
+        try {
+            const body = {
+                userInput: document.getElementById('text-input').value,
+                voiceID: document.getElementById("voices").value
+            };
+            const audioPlayer = document.getElementById('audio-player');
+
+            console.log(JSON.stringify(body));
+            const response = await fetch('/apps/openai-tts', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(body),
+            });
+            const blob = await response.blob();
+            const audioUrl = URL.createObjectURL(blob);
+            audioPlayer.src = audioUrl;
+            audioPlayer.play();
+        } catch (error) {
+            console.error(error);
+            alert('An error occurred. Please try again.');
+        }
+    })
+
+
+</script>
+</body>
