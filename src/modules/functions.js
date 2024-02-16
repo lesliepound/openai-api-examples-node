@@ -10,9 +10,9 @@ console.log("-----;-;;-;-", feeling)
 
 
 }
+//When openAI finds user prompts with greeetings, it calls this.
 function greetMe(salutation, extra = "dude", function_name = "greetMe") {
-    console.log("-----;-;;-;-", salutation)
-    console.log(" YO YO")
+
     if (salutation && salutation.toLowerCase().includes("morning") || salutation.toLowerCase().includes("day")) {
         return JSON.stringify({salutation: salutation, function_name: function_name });
     }
@@ -27,7 +27,6 @@ function greetMe(salutation, extra = "dude", function_name = "greetMe") {
 // In production, this could be your backend API or an external API
 function getCurrentWeather(location, unit = "fahrenheit") {
 
-    console.log(" I WAS CALLED")
     if (location.toLowerCase().includes("tokyo")) {
         return JSON.stringify({ location: "Tokyo", temperature: "10", unit: "celsius" });
     } else if (location.toLowerCase().includes("san francisco")) {
@@ -41,32 +40,27 @@ function getCurrentWeather(location, unit = "fahrenheit") {
 
 
 async function runConversation(userInput) {
-console.log('-------------.....',userInput)
-//added userInput
-// async function runConversation(userInput) {
     const userQuery = userInput.toString
     // Step 1: send the conversation and available functions to the model
     const messages = [
         { role: "system", content: "You are an online demo system. you will return answers but also the specifics of code with a function name"},
         { role: "user", content: "\"" +userInput +"\""},
-       // { role: "user", content: "What's the weather like in San Francisco, Tokyo, and Paris?" },
     ];
     const tools = [
         {
             type: "function",
             function: {
-                name: "get_current_weather",
-                description: "Tell me about a given location and include amusement parks",
+                name: "get_gems_info",
+                description: "Tell me about stones and gems",
                 parameters: {
                     type: "object",
                     properties: {
-                        location: {
+                        stone: {
                             type: "string",
-                            description: "The city and state, e.g. San Francisco, CA",
-                        },
-                        unit: { type: "string", enum: ["celsius", "fahrenheit"] },
+                            description: "Stone, gems or other rocks",
+                        }
                     },
-                    required: ["location"],
+                    required: ["stone"],
                 },
             },
         },
@@ -82,10 +76,6 @@ console.log('-------------.....',userInput)
                             type: "string",
                             description: "an feeling or state of being",
                         }
-                        // animal: {
-                        //     type: "string",
-                        //     description: "peson's name",
-                        // }
 
                     },
                     required: ["feeling"],
@@ -121,38 +111,14 @@ console.log('-------------.....',userInput)
         tool_choice: "auto", // auto is default, but we'll be explicit
     });
 
-    console.log("foo", messages," what is this ", response.choices[0].message.tool_calls[0].function.name)
     const functionName = (response.choices[0].message.tool_calls[0].function.name ) ? response.choices[0].message.tool_calls[0].function.name : "nothing";
     const responseMessage = response.choices[0]
-    console.log("foo", messages," what is this ", functionName)
+    //console.log("foo", messages," what is this ", functionName)
     return response.choices[0].message.tool_calls[0].function
-    // // Step 2: check if the model wanted to call a function
-    // const toolCalls = responseMessage.tool_calls;
-    // if (responseMessage.tool_calls) {
-    //     // Step 3: call the function
-    //     // Note: the JSON response may not always be valid; be sure to handle errors
-    //     const availableFunctions = {
-    //         get_current_weather: getCurrentWeather,
-    //         greet_me: greetMe,
-    //         hear_emotions :makeAdviceFeelings
-    //         //make_name: makeFunnyName
-    //     }; // only one function in this example, but you can have multiple
-    //     messages.push(responseMessage); // extend conversation with assistant's reply
-    //     for (const toolCall of toolCalls) {
-    //         const functionName = toolCall.function.name;
+      //         const functionName = toolCall.function.name;
     //         const functionToCall = availableFunctions[functionName];
     //         const functionArgs = JSON.parse(toolCall.function.arguments);
-    //         const functionResponse = functionToCall(
-    //             functionArgs.location,
-    //             functionArgs.unit
-    //         );
-    //         messages.push({
-    //             tool_call_id: toolCall.id,
-    //             role: "tool",
-    //             name: functionName,
-    //             content: functionResponse,
-    //         }); // extend conversation with function response
-    //     }
+
     //     const secondResponse = await openai.chat.completions.create({
     //         model: "gpt-3.5-turbo-1106",
     //         messages: messages,
