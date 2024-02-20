@@ -10,13 +10,12 @@ import listen from "./src/modules/stt.js";
 import runConversation from "./src/modules/functions.js";
 import moderateText from "./src/modules/moderation.js";
 
-const app = express();
-
 // Setting up local environment
 const port = 3000;
 const host = 'localhost';
 
 // Setting up middleware
+const app = express();
 app.use(express.static('public'));
 app.use(express.urlencoded({extended: true}));
 app.use(bodyParser.urlencoded({extended: true}));
@@ -27,7 +26,7 @@ app.use(bodyParser.json());
 // Chat, FewShot, Tempature API
 app.post('/apps/openai-chat', async (req, res) => {
     const temp = (req.body.temp)? parseInt(req.body.temp) : 1.0;  // some demos use tempature
-    console.log('----',req.body.temp)
+
     try {
         const results = await main(req.body.prompt,temp); // Call main with user input
         res.json(results);
@@ -40,8 +39,6 @@ app.post('/apps/openai-chat', async (req, res) => {
 // Chat API  --- with prompt training
 app.post('/apps/openai-fewshot', async (req, res) => {
     try {
-        //let prompt = req.body.prompt; // Extract user input from request body
-        //console.log('-------------',req.body.prompt)
         const results = await main(req.body.prompt,.9); // Call main with user input
         res.json(results);
     } catch (error) {
