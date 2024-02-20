@@ -1,3 +1,7 @@
+#Git/Platform
+.DS_Store
+.idea
+
 # Node.js
 node_modules
 package-lock.json
