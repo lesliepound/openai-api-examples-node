@@ -24,10 +24,12 @@ app.use(bodyParser.json());
 
 // Setting up Routes **
 
-// Chat API
+// Chat, FewShot, Tempature API
 app.post('/apps/openai-chat', async (req, res) => {
+    const temp = (req.body.temp)? parseInt(req.body.temp) : 1.0;  // some demos use tempature
+    console.log('----',req.body.temp)
     try {
-        const results = await main(req.body.prompt,1.1); // Call main with user input
+        const results = await main(req.body.prompt,temp); // Call main with user input
         res.json(results);
     } catch (error) {
         console.error(error);

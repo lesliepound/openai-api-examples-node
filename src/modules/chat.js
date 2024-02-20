@@ -9,7 +9,7 @@ async function main(promptInput,temp) {
     const completion = await openai.chat.completions.create({
         messages: [{"role": "system", "content": "You are a helpful assistant."},
             {"role": "user", "content": prompt}],
-         temperature: 1.0,    //1-2; higher numbers (ex 1.7) are more creative/less predicatble
+         temperature: temp,    //1-2; higher numbers (ex 1.7) are more creative/less predicatble
          model: "gpt-3.5-turbo",  //gpt-4, gpt-4-turbo-preview
     });
 
