@@ -38,6 +38,7 @@ This repository contains demos from the OpenAI Developer quickstart for the APIs
 |                        |                 | http://localhost:3000 |
 |                        | src/modules/... | public/...            |
 | text generation (chat) | chat.js         | /chat.html            |
+|     adjust creatvivity | chat.js         | /temperature.html     |
 |        prompt training | chat.js         | /fewshot.html         |
 |              functions | functions.js    | /funcrions.html       |
 |                 vision | visual.js       | /visual.html          |

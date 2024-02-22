@@ -1,8 +1,8 @@
-// server.js
+// web server
 import express from 'express';
 import bodyParser from 'body-parser';
 
-// importing modules for each API example
+// Modules to run each API example
 import viz from "./src/modules/visual.js";
 import main from './src/modules/chat.js';
 import speak from "./src/modules/tts.js";
@@ -92,8 +92,7 @@ app.post('/apps/openai-stt', async (req, res) => {
         let buffer = await listen(); // Call the speak function
         res.send(buffer)
     } catch (error) {
-        // Handle errors here, provide informative responses to the client
-        res.status(500).send('Error processing request');
+       res.status(500).send('Error processing request');
     }
 });
 
