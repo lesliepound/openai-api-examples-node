@@ -11,6 +11,7 @@
             height: 100px;
             width: 100%;
         }
+
         #generatedText:empty {
             visibility: hidden
         }
@@ -19,13 +20,13 @@
 <body>
 
 <main>
-<h1>OpenAI Node API Demos: Few Shot Prompting</h1>
-As an example, run this query without the checkbox, then with it.
+    <h1>OpenAI Node API Demos: Few Shot Prompting</h1>
+    As an example, run this query without the checkbox, then with it.
     Play with other examples. Watch the answers change as you add and subtract examples.
 
-<h2>Training Examples</h2>
+    <h2>Training Examples</h2>
 
-<textarea id="fewshot">
+    <textarea id="fewshot">
 Fox approached a chicken coop made of metal,he went away mad;
 Fox found a chicken coop made of steel,he left in a huff;
 The fox went to a chicken coop made of very hard materials, he wasnt able to get to the chicken;
@@ -38,52 +39,59 @@ Mr Fox walked up to the bird coop made of old stiff clothes, he easily destroyed
 When the fox came to a chicken house which made of cotton, he got to chickens and ate them all. Oh no!
 </textarea>
 
-<br>
-<input id="voiceId" type="checkbox" checked style="display:inline-block"> Use the examples as training.
+    <br>
+    <input id="voiceId" type="checkbox" checked style="display:inline-block"> Use the examples as training.
+    <br><button id="send-button">Send</button>
 
-<div class="rightBubble">
+    <div class="rightBubble">
 <textarea id="input-text" placeholder="Question / Prompt Here">
 When the fox found a
 chicken coop made of concrete. What happened?</textarea>
-</div>
+    </div>
 
 
-<button id="send-button">Run</button>
-<textarea type="text" id="generatedText"></textarea>
 
-<script>
-    const sendButton = document.getElementById('send-button');
+    <!--textarea type="text" id="generatedText"></textarea-->
 
-    sendButton.addEventListener('click', async () => {
-        let training = '';
-        if (document.getElementById("voiceId").checked ) {
-            training = document.getElementById('fewshot').value.trim();
-        }
-        const userInput = document.getElementById('input-text').value.trim();
-        const prompt = training + "//" + userInput;
-        console.log(prompt)
-        if (!prompt) {
-            return alert('Please enter a message.');
-        }
-        try {
-            const response = await fetch('/apps/openai-fewshot', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({prompt}), // Send user input to the server
-            })
+    <div class="input-output-container leftBubble">
+        <div id="output-text" class="outputText"></div>
+    </div>
 
-            const results = await response.json();
-            const element = document.querySelector("#generatedText");
-            element.style.visibility = "visible"
-            element.value = results
+    <script>
+        const sendButton = document.getElementById('send-button');
 
-        } catch (error) {
-            console.error(error);
-            alert('An error occurred. Please try again.');
-        }
+        sendButton.addEventListener('click', async () => {
+            let training = '';
+            if (document.getElementById("voiceId").checked) {
+                training = document.getElementById('fewshot').value.trim();
+            }
+            const userInput = document.getElementById('input-text').value.trim();
+            const prompt = training + "//" + userInput;
+            console.log(prompt)
+            if (!prompt) {
+                return alert('Please enter a message.');
+            }
+            try {
+                const response = await fetch('/apps/openai-fewshot', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({prompt}), // Send user input to the server
+                })
 
-    });
-</script>
+
+
+                const results = await response.json();
+                const outputText = document.querySelector(".outputText");
+                outputText.style.visibility = "visible"
+                outputText.textContent = results;
+
+            } catch (error) {
+                console.error(error);
+                alert('An error occurred. Please try again.');
+            }
+
+        });
+    </script>
 </main>
 </body>
 

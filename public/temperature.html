@@ -11,10 +11,15 @@
             height: 100px;
             width: 100%;
         }
+
         #generatedText:empty {
             visibility: hidden
         }
-        #tempature1::after { color:lime; content: attr(value);}
+
+        #tempature1::after {
+            color: lime;
+            content: attr(value);
+        }
 
     </style>
 </head>
@@ -25,11 +30,14 @@
 
     The temperature option for the chat API is a number that determines how unexpected reponses should be.
     <p>This often translates into how creative a response is.
-    The range is 1.0-2.0.
-    2.0, the highest temperature may not be completely understanable and may not even adhere to grammar rules.
+        The range is 1.0-2.0.
+        Sometimes, the highest temperature may not be completely understandable and may not even adhere to grammar
+        rules.
     <h2>Temperature</h2>
-    Change the creativity level from OpenAI. Try it with an historical event and creative story.
+    Change the creativity level. Try it with an historical event and creative story.
     You can try the ones provided or make your own.
+    <br>
+    <button id="send-button">Send</button>
     <select name="temperature" id="temperature" style="width:200px">
         <option id="tempature1" value="0.1">0.1 - most predictive</option>
         <option id="tempature2" value="0.2">0.2</option>
@@ -39,9 +47,9 @@
         <option value="0.6">0.6</option>
         <option value="0.7">0.7</option>
         <option value="0.8">0.8</option>
-        <option value="0.9">0.9  - less creative ^ </option>
-        <option value="1.0">1.0  - creative</option>
-        <option value="1.1">1.1  - more creative v</option>
+        <option value="0.9">0.9 - less creative ^</option>
+        <option value="1.0">1.0 - creative</option>
+        <option value="1.1">1.1 - more creative v</option>
         <option value="1.2">1.2</option>
         <option value="1.3">1.3</option>
         <option value="1.4">1.4</option>
@@ -50,9 +58,7 @@
         <option value="1.7">1.7</option>
         <option value="1.8">1.8</option>
         <option value="1.9">1.9</option>
-        <option value="2.0">2.0 - random</option>
-
-
+        <option value="2.0">2.0 - most creative</option>
     </select>
 
 
@@ -61,9 +67,13 @@
 Ask a question </textarea>
     </div>
 
-<div class="result"></div>
-    <button id="send-button">Run</button>
-    <textarea type="text" id="generatedText"></textarea>
+    <div class="result"></div>
+
+    <!--textarea type="text" id="generatedText"></textarea-->
+
+    <div class="input-output-container leftBubble">
+        <div id="output-text" class="outputText"></div>
+    </div>
 
     <script>
         const sendButton = document.getElementById('send-button');
@@ -73,7 +83,7 @@ Ask a question </textarea>
                 prompt: document.getElementById('input-text').value,
                 temp: document.getElementById('temperature').value,
             };
-              if (!prompt) {
+            if (!prompt) {
                 return alert('Please enter a message.');
             }
             try {
@@ -85,9 +95,9 @@ Ask a question </textarea>
                 })
 
                 const results = await response.json();
-                const element = document.querySelector("#generatedText");
-                element.style.visibility = "visible"
-                element.value = results
+                const outputText = document.querySelector(".outputText");
+                outputText.style.visibility = "visible"
+                outputText.textContent = results
 
             } catch (error) {
                 console.error(error);

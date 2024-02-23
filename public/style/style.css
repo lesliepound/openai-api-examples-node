@@ -61,12 +61,13 @@ main {
 
     height: 0;
     border: 0.625em solid transparent;
-    border-right-color: #9ce1e8;
+    border-right-color:   rgba(60, 225, 232, .2);
     border-left: 0;
     border-bottom: 0;
     margin-top: -0.312em;
     margin-left: -0.625em;
 }
+
 
 .rightBubble:after {
     content: '';
@@ -97,6 +98,9 @@ input, textarea , ::placeholder {
     font-size:1em;
 }
 
+.leftBubble {
+    background: rgba(60, 225, 232, .3);
+}
 @media (max-width: 768px) {
     .card {
         width: 100%; /* Make cards full-width on smaller screens */
