@@ -57,7 +57,7 @@ async function runConversation(userInput) {
                     properties: {
                         stone: {
                             type: "string",
-                            description: "Stone, gems or other rocks",
+                            description: "Stone,gems or other rocks",
                         }
                     },
                     required: ["stone"],
@@ -68,7 +68,7 @@ async function runConversation(userInput) {
             type: "function",
             function: {
                 name: "hear_emotions",
-                description: "Be empathetic and give advice for feelings. This function name is hear_emotions",
+                description: "Feelings ",
                 parameters: {
                     type: "object",
                     properties: {
@@ -86,7 +86,7 @@ async function runConversation(userInput) {
             type: "function",
             function: {
                 name: "greet_me",
-                description: "Greet the user. This function is greet_me  ",
+                description: "Greet the user. ",
                 parameters: {
                     type: "object",
                     properties: {
@@ -113,25 +113,9 @@ async function runConversation(userInput) {
 
     const functionName = (response.choices[0].message.tool_calls[0].function.name ) ? response.choices[0].message.tool_calls[0].function.name : "nothing";
     const responseMessage = response.choices[0]
-    //console.log("foo", messages," what is this ", functionName)
     return response.choices[0].message.tool_calls[0].function
-      //         const functionName = toolCall.function.name;
-    //         const functionToCall = availableFunctions[functionName];
-    //         const functionArgs = JSON.parse(toolCall.function.arguments);
 
-    //     const secondResponse = await openai.chat.completions.create({
-    //         model: "gpt-3.5-turbo-1106",
-    //         messages: messages,
-    //         tools: tools,
-    //         tool_choice: "auto",
-    //     }); // get a new response from the model where it can see the function response
-    //     console.log("second:",secondResponse)
-    //     return secondResponse
-   // }
 }
 
 
-//runConversation();
 export default runConversation
-
-//runConversation().then(console.log).catch(console.error);

@@ -37,20 +37,21 @@
 
 
 <h1>OpenAI Node API Demos: Functions</h1>
-If you use the API, you provide functions (sometimes called tools) that OpenAI
+If you use this API, you provide functions (sometimes called tools) that OpenAI
 invokes based on the user's chat text.
 
-Here OpenAI is connecting to one of three functions returning JSON keywords.
-You could then connect the result to a more targeted result with another prompt
-(not seen by the user) or create a formal query and call a database function,
+Here OpenAI is connecting to one of three functions returning only JSON keywords.
+You can use this to extract key concepts from chat text.
+You could then create a formal query and call a database function,
 showing those results.</p>
 
 <h3>This Demo</h3>
 Here are the different options in this example. <i> If you're familar with conversational intents, this is similar.</i>
 
-<li><span class="name">greet_me</span>: Type things like "Good morning." "Hello my name is jenny"
-<li><span class="name">city_info</span>: Type things like "Where is Los Angeles"
-<li><span class="name">hear_emotions</span>: Type things like " I am angry"
+Try these examples.
+<li> "Good morning." "Hello my name is jenny"
+<li> "Find diamonds", "what is graphite? "
+<li> " I am angry",  "this is amazing. I am in awe"
 
     <div class="rightBubble">
         <textarea id="input-text" placeholder="Question / Prompt Here"></textarea>
