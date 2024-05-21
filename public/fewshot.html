@@ -41,14 +41,14 @@ When the fox came to a chicken house which made of cotton, he got to chickens an
 
     <br>
     <input id="voiceId" type="checkbox" checked style="display:inline-block"> Use the examples as training.
-    <br><button id="send-button">Send</button>
+    <br>
+    <button id="send-button">Send</button>
 
     <div class="rightBubble">
 <textarea id="input-text" placeholder="Question / Prompt Here">
-When the fox found a
-chicken coop made of concrete. What happened?</textarea>
+When the fox found a concrete-enforced
+chicken coop . What happened?</textarea>
     </div>
-
 
 
     <!--textarea type="text" id="generatedText"></textarea-->
@@ -79,11 +79,10 @@ chicken coop made of concrete. What happened?</textarea>
                 })
 
 
-
                 const results = await response.json();
-                const outputText = document.querySelector(".outputText");
+                const outputText = document.querySelector(".outputText" );
                 outputText.style.visibility = "visible"
-                outputText.textContent = results;
+                outputText.textContent =  results;
 
             } catch (error) {
                 console.error(error);
