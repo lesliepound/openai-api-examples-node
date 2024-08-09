@@ -1,0 +1,85 @@
+{
+  "pages": [
+    {
+      "id": "page1",
+      "type": "story",
+      "text": "Welcome to Really Big Medical Center",
+
+      "timer": 3
+    },
+    {
+      "id": "pagePink",
+      "type": "story",
+      "text": "How can I help you?",
+      "timer": 2
+    },
+    {
+      "id": "page3",
+      "type": "options",
+      "text": "You can ask about doctors, numbers, and appointments",
+      "display":"none",
+      "options": [
+      {
+        "option": "What is the phone number for this department",
+        "nextSlideId": "phonePage",
+        "slot": "department"
+      },
+        {
+          "option": "What is the phone number for this doctor",
+          "nextSlideId": "phonePage",
+          "slot": "doctor's name"
+        },
+        {
+          "option": "How can I get ahold of Doctor",
+          "nextSlideId": "phonePage",
+          "slot": "doctor's name"
+        },
+
+        {
+          "option": "Who do I see for",
+          "nextSlideId": "doctorPage",
+          "slot": "department"
+        },
+      {
+        "option": "What is the location",
+        "nextSlideId": "locationPage",
+        "slot": "location"
+      },
+      {
+        "option": "Can I talk to a nurse or doctor",
+        "nextSlideId": "doctorPage",
+        "slot": "doctor's name"
+      }
+    ]
+    },   {
+      "id": "phonePage",
+      "text": " The medical center phone is 000 555-3030.",
+      "type": "end"
+    },
+       {
+      "id": "locationPage",
+      "text": " The medical center includes the oncology, internal medicine, dermatology. The phone is 000 555-3030. It is located at 3033 Elm Blvd., someCity, CA. 99999",
+      "type": "end"
+    },
+    {
+      "id": "doctorPage",
+      "text": "About Doc  .... works in ",
+      "type": "end"
+    },
+
+    {
+      "id": "pageLocation",
+      "text": "Here's the address",
+      "type": "end"
+    },
+
+    {
+      "id": "page10",
+      "text": "Now go away",
+      "type": "end"
+    }
+
+
+    ]
+
+}

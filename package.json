@@ -3,6 +3,7 @@
   "type": "module",
   "dependencies": {
     "body-parser": "^1.20.2",
+    "groq-sdk": "^0.5.0",
     "index": "^0.4.0",
     "mp3": "^0.1.0"
   },

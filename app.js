@@ -4,12 +4,12 @@ import bodyParser from 'body-parser';
 
 // importing modules for each API example
 
-import viz from "./src/modules/visual.js";
-import main from './src/modules/chat.js';
+
 import speak from "./src/modules/tts.js";
 import listen from "./src/modules/stt.js";
 import runConversation from "./src/modules/functions.js";
-import moderateText from "./src/modules/moderation.js";
+//import plainConversation from "./src/modules/functions.js";
+
 
 // Setting up local environment
 const port = 3000;
@@ -24,52 +24,76 @@ app.use(bodyParser.json());
 
 // Setting up Routes **
 
-// Chat, FewShot, Tempature API
-app.post('/apps/openai-chat', async (req, res) => {
-    const temp = (req.body.temp)? parseInt(req.body.temp) : 1.0;  // some demos use tempature
+// this is server side
+//stup tools/messaging
+app.post('/slide/:id', async (req, res) => {
+    //console.log(id)
+    const { response } = req.body;
+    const slide = slides[req.params.id];
+    const intents = ['blue','green'];  // where do the intents come from
+    // 1. Use AI to match user response to valid choices  //slide.validResponses
+   // const aiResponse = await matchResponseToValidChoices(response, ['blue','green']);
 
-    try {
-        const results = await main(req.body.prompt,temp); // Call main with user input
-        res.json(results);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error processing request');
+    const aiResponse = await matchResponseToValidChoices(response, intents);
+
+    // Handle unmatched responses (optional)
+    if (!aiResponse.matched) {
+        // ... (Logic for handling unmatched responses)
+        return res.json({ nextSlideId: "unmatchedSlide" });
     }
+
+    const nextSlideId = slide.nextSlideLogic(aiResponse.matched);
+    res.json({ nextSlideId });
 });
 
-// Chat API  --- with prompt training
-app.post('/apps/openai-fewshot', async (req, res) => {
-    try {
-        const results = await main(req.body.prompt,.9); // Call main with user input
-        res.json(results);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error processing request');
-    }
-});
+async function matchResponseToValidChoices(response, validResponses) {
+    // Call your generative AI API with a prompt like:
+    // "Match the user's input '$response' to the closest option in the list: $validResponses"
+    // Example using OpenAI:
+    // const answer = await openai.chat.completions.create({
+    //     model: "gpt-3.5-turbo-1106",
+    //     messages: messages,
+    //     tools: tools,
+    //     tool_choice: "auto", // auto is default, but we'll be explicit
+    // });
 
-// Visual API
-app.post('/apps/openai-visual', async (req, res) => {
-    try {
-        let {userInput} = req.body;
-        const results = await viz();
-        res.json(results);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error processing request');
-    }
-});
+    //const openai = new OpenAI(/* Your API key */);
+    const completion = await openai.create({
+        model: "gpt-3.5-turbo-1106", // Or your chosen model
+        prompt: `Match the user's input '${answer}' to the closest option in the list: blue,green, pink\`; // ${validResponses.join(", ")}`,
+        messages: messages,
+        tools: tools,
+    });
 
+    // Parse the AI response to extract matched location and original input
+    const matched = completion.data.choices[0].text.trim();
+    return { location: matched, matched: validResponses.includes(matched) ? matched : null };
+}
+
+// test code
 // Functions
+
+
 app.post('/apps/openai-funcs', async (req, res) => {
     try {
-        let {userInput} = req.body; // Extract user input from request body
-        const results = await runConversation(userInput);
-        res.json(results);
+        const { prompt, model, options } = req.body;
+        //const { prompt, model, level, options } = req.body;
+        console.log('---->', model);
+        // Await the result of runConversation
+        const result = await runConversation(prompt, options, model);
+
+        // Now log the result
+        console.log('---->', result);
+
+        // Send the response
+        res.json(result);
     } catch (error) {
-        res.status(500).send('Error processing request');
+        console.error("Error processing request:", error);
+        res.status(500).json({ error: "Internal Server Error" });
     }
 });
+
+
 
 // Text to Speech / Narrate
 app.post('/apps/openai-tts', async (req, res) => {
@@ -98,17 +122,6 @@ app.post('/apps/openai-stt', async (req, res) => {
     }
 });
 
-// Moderation API
-app.post('/apps/openai-moderation', async (req, res) => {
-    try {
-        let prompt = req.body.prompt; // Extract user input from request body
-        const results = await moderateText(prompt); // Call main with user input
-        res.json(results);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error processing request');
-    }
-});
 
 //Starting your http server
 app.listen(port, () => {

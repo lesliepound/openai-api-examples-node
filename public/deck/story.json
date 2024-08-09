@@ -1,0 +1,167 @@
+{
+  "pages": [
+    {
+      "id": "page1",
+      "type": "story",
+      "text": "Welcome to a thrilling adventure!",
+      "timer": 2
+    },
+    {
+      "id": "page2",
+      "type": "story",
+      "text": "You find yourself walking in when the path breaks into two",
+      "timer": 3
+    },
+    {
+      "id": "page3",
+      "type": "options",
+      "text": "You now must choose. Which path do you take?",
+      "options": [
+        {
+          "option": "Left path toward the the ocean",
+          "nextSlideId": "page4"
+        },
+        {
+          "option": "Right path into the jungle",
+          "nextSlideId": "page5"
+        }
+      ]
+    },
+    {
+      "id": "page4",
+      "type": "story",
+      "text": "Theres a storm brewing over the ocean. Go home and be safe",
+      "nextSlideId": "page20",
+      "timer": 4
+    },
+    {
+      "id": "page5",
+      "type": "story",
+      "text": "You enter a jungle and see a mysterious monster!",
+      "nextSlideId": "page6",
+      "timer": 3
+    },
+    {
+      "id": "page6",
+      "type": "options",
+      "text": "What do you do now?",
+
+      "options": [
+        {
+          "option": "I fight him",
+          "nextSlideId": "page7"
+        },
+        {
+          "option": "I hug him",
+          "nextSlideId": "page8"
+        }
+      ]
+    },
+    {
+      "id": "page7",
+      "type": "story",
+      "text": "Well. The monster wins the fight and now you limp",
+      "nextSlideId": "page20",
+      "timer": 4
+
+    },
+    {
+      "id": "page8",
+      "type": "story",
+      "text": "The monster likes affection and now follows you everywhere",
+      "nextSlideId": "page9",
+      "timer": 4
+
+    },
+    {
+      "id": "page9",
+      "type": "story",
+      "text": "This monster even cries when you are not around. A crying monster ? Oh no.",
+      "nextSlideId": "page10",
+      "timer": 3
+    },
+    {
+      "id": "page10",
+      "type": "options",
+      "text": "How can you solve this predicament? ",
+      "options": [
+        {
+          "option": "Send him to school",
+          "nextSlideId": "page21"
+        },
+        {
+          "option": "Predicament? nah. We go to disneyland",
+          "nextSlideId": "page11"
+        },
+        {
+          "option": "I take him to see Dr. Phil",
+          "nextSlideId": "page12"
+        },
+        {
+          "option": "I make a dating profile for Fred. That's my monster.",
+          "nextSlideId": "page13"
+        },
+        {
+          "option": "I call ghost busters",
+          "nextSlideId": "page14"
+        },
+        {
+          "option": "Give a skateboard",
+          "nextSlideId": "page15"
+        }
+      ]
+    },
+    {
+      "id": "page14",
+      "type": "story",
+      "text": "The Ghostbusters are able to monsters as well as ghosts. They make your monster sleep and you escape",
+      "nextSlideId": "page20",
+      "timer": 6
+
+    },
+    {
+    "id": "page15",
+    "text": "He skates away",
+   "type": "end"
+
+
+    },
+    {
+      "id": "page11",
+      "type": "story",
+      "text": "At Disneyland, the monster makes new friends, stops crying so much and leaves you alone",
+      "nextSlideId": "page20",
+      "timer": 5
+
+    },
+    {
+      "id": "page12",
+      "type": "story",
+      "text": "Dr. Phil confronts the monster and helps him build monster esteem",
+      "nextSlideId": "page20",
+      "timer": 5
+
+    },
+    {
+      "id": "page13",
+      "type": "story",
+      "text": "Fred, the monster, finds love and moves away.",
+      "nextSlideId": "page20",
+      "timer": 5
+
+    },
+    {
+      "id": "page20",
+      "text": "the end",
+      "type": "end"
+    },
+    {
+      "id": "page21",
+      "text": "He got a degree and found somebody smarter",
+      "type": "end"
+    }
+
+
+    ]
+
+}

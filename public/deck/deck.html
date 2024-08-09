@@ -1,0 +1,583 @@
+<html>
+<head>
+
+    <link rel="stylesheet" href="/style/style.css">
+    <!--link rel="stylesheet" href="/sle/aniblocks.css"-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sriracha&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body style=" " >
+<div id="main" style="width:700px">
+<h1 class="header">
+   <span style="font-size:1.4em">Demo: Automatic Intents</span>
+<div class="button-group">
+    <button class="example " id="option1">Interactive Story</button>
+    <button class="example" id="option2">Chat Bot</button>
+
+
+<div id=info-button class="circle-button">
+    <span class="symbol">i</span>
+</div>
+    <div id="settings-button" class="circle-button">
+        <span class="symbol">&#9881;</span>
+    </div>
+</h1>
+
+<h2 class="demo-intro">Let me tell you a story..</h2>
+<!--img style="width:200px; height:100px" src="/assets/beach.png" class="peak"-->
+
+<div class="section">
+    <div class="left-bubble" model="gpt3.5-turbo">
+        <div id="content">
+        </div>
+    </div>
+    <div></div>
+    <div>
+        <div class="right-bubble" model="Gemma">
+            <textarea id="input-text" class="output" placeholder=""></textarea>
+        </div>
+        <button class="mic-button"></button>
+
+        <!--<button id="send-button">Send</button> -->
+    </div>
+</div>
+
+<div id="dialog" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>Demo: Automatic Intents </h2>
+        <p>Making lessons and bots dead simple. Contact at lesliedpound@gmail.com</p>
+    </div>
+</div>
+
+<div id="dialog1" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>Settings</h2>
+        <p>
+        Model
+        <div class="dropdown">
+            <select id="model">
+                 <option value="mixtral-8x7b-32768">mixtral-8x7b</option>
+                <option value="gemma-7b-it">gemma-7b-it</option>
+                <option value="gpt-4-turbo">gpt-4-turbo</option>
+                <option value="gpt-3.5-turbo-1106" selected>gpt-3.5-turbo-1106</option>
+                <option value="llama3-70b-8192">llama3-70b</option>
+            </select>
+        </div>
+        </p>
+
+        <label class="switch" for="toggle">
+            <input type="checkbox" id="toggle">
+            <span class="slider round"></span>
+        </label>
+        <div style="vertical-align: bottom; display:inline-block">Show Model (API) response</div>
+
+    </div>
+
+</div>
+
+<div id="log">
+
+</div>
+
+
+
+<script>
+
+    function addModelName(modelID, terms)  {
+    const element = document.querySelector("modelID");
+    const dynamicContent = terms;
+
+    element.style.setProperty("--content", `"${dynamicContent}"`); // Set CSS variable
+
+    }
+    // Setup : listeners for dialog
+    function setListeners() {
+        const infoButton = document.getElementById('info-button');
+        const settingsButton = document.getElementById('settings-button');
+        const modal = document.getElementById('dialog');
+        const settingsModal = document.getElementById('dialog1');
+        const closeButtons = document.querySelectorAll('.close-button');
+
+        document.getElementById("model").value = "gpt-3.5-turbo-1106";
+
+        document.getElementById('log').style.display ="none"
+        infoButton.addEventListener('click', () => showModal('dialog'));
+        settingsButton.addEventListener('click', () => showModal('dialog1'));
+        closeButtons.forEach(button => button.addEventListener('click', closeModal));
+        modal.addEventListener('click', closeModal);
+        settingsModal.addEventListener('click', closeModal);
+
+        const toggleSwitch = document.getElementById("toggle");
+        const slider = document.querySelector('.slider');
+
+// Add event listener for changes (clicks)
+        toggleSwitch.addEventListener('change', function() {
+            if (toggleSwitch.checked) {
+                // Checkbox is checked (ON)
+                let isListening = true;
+                document.getElementById('toggle').classList.add("on")
+                console.log("Switch is ON");
+                // Add any code here to execute when the switch is turned on
+                document.getElementById('log').style.display ="block"
+
+            } else {
+                // Checkbox is unchecked (OFF)
+                //let isListening = false;
+                document.getElementById('toggle').classList.remove("on")
+                document.getElementById('log').style.display ="none"
+                console.log("Switch is OFF");
+                // Add any code here to execute when the switch is turned off
+            }
+        });
+
+    }
+        function showModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(event) {
+            if (event.target.classList.contains('close-button') || event.target.classList.contains('modal')) {
+                event.target.closest('.modal').style.display = 'none';
+            }
+        }
+
+
+
+
+    let currentSlideIndex = 0;
+    let deckData = null;
+    let optionData = [];
+
+    //If this page has a  nextSlide attribute listed, change that new next and update the index pointer
+    function getForNextSlide(thisIndex) {
+        // if it has a nextSlideId  (first level)
+        if (deckData.pages[thisIndex].hasOwnProperty("nextSlideId")) {
+            let thisID = deckData.pages[thisIndex].nextSlideId;
+            let revisedIndex = deckData.pages.findIndex(page => page.id === thisID);
+            return revisedIndex;
+        }
+        return null;
+    }
+
+    function findPageIndex(deckData, targetPageName) {
+        const matchingIndex = deckData.pages.findIndex(page => page.id === targetPageName);
+        return matchingIndex;
+    }
+
+    async function loadDeck(storyLink) {
+        //remove all time outs
+        currentSlideIndex = 0;
+        deckData = null;
+        optionData = [];
+
+        const response = await fetch(storyLink);
+        deckData = await response.json();
+        document.getElementById("content").innerHTML = "<div>" + JSON.stringify(deckData) + "</div>"
+        displayPage(currentSlideIndex); // Use index directly
+    }
+
+    function clearBubble(el) {
+        el.innerHTML = '';
+        el.value ="";
+    }
+    //Setting up chat script, story or lesson from JSON
+    function displayPage(index) {
+        //Reset index not on order of slides, but where it restarted
+        const slide = deckData.pages[index];
+
+        const contentDiv = document.getElementById('content');
+        clearBubble(contentDiv)  // Clear previous content
+        const inputDiv = document.getElementById('input-text');
+        clearBubble(inputDiv)
+        const slideTextDiv = document.createElement('div');
+        slideTextDiv.className = 'slide';
+        slideTextDiv.textContent = slide.text;
+
+        if (slide.type === 'end') {
+            contentDiv.appendChild(slideTextDiv);
+            return
+        }
+
+        if (slide.type === 'story') {
+            contentDiv.appendChild(slideTextDiv);
+            setTimeout(() => {
+                //  If theres a nextSlideId on timed sldie, go there
+                let revisedIndex = getForNextSlide(index)
+                if (revisedIndex)
+                    currentSlideIndex = revisedIndex
+                else currentSlideIndex++
+                console.log(index, 'next is', currentSlideIndex)
+                //extraLookup
+                // console.log(slideTextDiv)
+
+                displayPage(currentSlideIndex);
+            }, slide.timer * 1000);
+        } else if (slide.type === 'options') {
+            if (slide.options) {
+                slide.options.forEach((optionObj, idx) => {
+                    console.log(optionObj.nextSlideId)
+                    const optionSpan = document.createElement('div');
+                    optionSpan.className = `option delay-${idx}`;
+                    optionSpan.textContent = optionObj.option;
+                    if (!slide.hasOwnProperty("display"))
+                        slideTextDiv.appendChild(optionSpan);
+                    optionData.push({
+                        option: optionObj.option,
+                        slot:optionObj.slot,
+                        nextSlideId: optionObj.nextSlideId
+                    });
+                });
+            }
+            contentDiv.appendChild(slideTextDiv);
+            currentSlideIndex++;
+        }
+    }
+
+
+    //  Send voice to  matchIt
+    // called from voice  puts results here.
+    function matchIt(res) {
+        console.log('->>',res)
+        //listenOff();
+        document.getElementById('input-text').value= res
+        inputText= res;
+    }
+
+    let inputText = document.getElementById('input-text').value;
+    const textField = document.getElementById('input-text');
+    const outputText = document.getElementById('output-text');
+
+    // Send prompt to server
+    textField.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Prevent default form submission if in a form
+            handleSend();  // Call the common handler function
+        }
+    });
+
+    async function handleSend() {
+        const contentDiv = document.getElementById('content');
+        clearBubble(contentDiv)
+        //sendButton.addEventListener('click', async () => {
+        let prompt = document.getElementById('input-text').value;
+        //let model ="openai";
+        let model = getDropdownValue()
+        try {
+            const dataToSend = {
+                prompt,
+                model,
+                options: optionData,
+            };
+            console.log('data to send', dataToSend) // Log the object, not the stringified version
+
+
+
+            const response = await fetch('/apps/openai-funcs', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(dataToSend), // Stringify for sending
+            });
+            const result = await response.json();
+            if (showLog()) { document.getElementById('log').innerHTML=JSON.stringify(result)  }
+            console.log('result', result);
+            //console.log("--------->>>a>>>-", JSON.parse(result))
+            const parsedArguments = JSON.parse(result.function.arguments);
+            console.log('redddsult', parsedArguments);
+            console.log('name', result.function.name);
+
+            let thisSlot =null;
+            if (parsedArguments.slot) {
+                thisSlot = (parsedArguments.slot) ? parsedArguments.slot : null
+                thisSlot = thisSlot.replace("Dr", "")
+            }
+            console.log("-------->>>-", thisSlot);
+
+            let indexOfPage = findPageIndex(deckData, result.function.name)
+
+            if (result.function.name === "doctorPage") {
+
+                 content = getDocData(thisSlot.replace("Dr.",""))
+                  deckData.pages[indexOfPage].text = formatObjectString(content);
+                 displayPage(indexOfPage);
+                 return;
+
+             }
+            if (result.function.name === "phonePage") {
+                content = getDocData(thisSlot,"phone")
+                //console.log("-phone:", formatObjectString(content));
+                console.log("-phone", content);
+                deckData.pages[indexOfPage].text = formatObjectString(content);
+                displayPage(indexOfPage);
+
+            }
+
+            displayPage(indexOfPage)
+
+        } catch (error) {
+            // ... (error handling)
+        }
+    };
+
+    function formatObjectString(obj) {
+        const jsonString = JSON.stringify(obj);   // Convert to JSON string
+        const withoutBraces = jsonString.slice(1, -1); // Remove the first and last characters (curly braces)
+        const linefeedSeparated = withoutBraces.replace(/,/g, "\n"); // Replace commas with line feeds
+        return linefeedSeparated;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+         const interactiveStoryButton = document.getElementById('option1');
+        const chatBotButton = document.getElementById('option2');
+        interactiveStoryButton.classList.remove( "active"); // List all classes to remove
+        chatBotButton.classList.remove( "active"); // List all classes to remove
+
+
+        interactiveStoryButton.addEventListener('click', () => {
+            loadDeck('/deck/story.json');
+            document.getElementById('option2').classList.remove( "active");
+            document.getElementById('option1').classList.add("active");
+         });
+        chatBotButton.addEventListener('click', () => {
+            loadDeck('/deck/stories/chatbot/story.json');
+            document.getElementById('option1').classList.remove( "active");
+            document.getElementById('option2').classList.add("active");
+        });
+    });
+
+    setListeners()
+
+    function setDropdownValue(choice) {
+        const dropdown = document.getElementById("model");
+        for (let i = 0; i < dropdown.options.length; i++) {
+            if (dropdown.options[i].value === choice) {
+                dropdown.selectedIndex = i;
+                break;
+            }
+        }
+    }
+    function getDropdownValue() {
+        const dropdown = document.getElementById("model");
+        return dropdown.value;
+    }
+
+    const dropdown = document.getElementById("model");
+
+    dropdown.addEventListener("change", (event) => {
+
+        const terms = `${event.target.value}`
+        const label = terms.slice(0, 10);
+
+        document.querySelector(".left-bubble").setAttribute("model", label)
+        document.querySelector(".right-bubble").setAttribute("model", label)
+
+    });
+
+
+
+   //This is a small example; data can be loaded from a JSON file or queried via a database
+   const medicalData= [
+        {
+            "department": "Oncology",
+            "phone": "(626) 555-1122",
+            "doctors": [
+                { "name": "Dr. Emily Carter", "specialty": "Oncologist" },
+                { "name": "Dr. Daniel Kim", "specialty": "Hematologist-Oncologist" },
+                { "name": "Dr. Freda Oncol", "specialty": "Oncologist" },
+                { "name": "Dr. Valentina Adami", "specialty": "Oncologist" },
+
+            ],
+            "appointments": [
+                { "date": "2024-07-18", "doctor": "Dr. Emily Carter", "time": "11:00 AM" },
+                { "date": "2024-08-05", "doctor": "Dr. Jay Gupta", "time": "3:15 PM" }
+            ]
+        },
+        {
+            "department": "Internal Medicine",
+            "phone": "(626) 555-3344",
+            "doctors": [
+                { "name": "Dr. Olivia Rodriguez", "specialty": "Internist" },
+                { "name": "Dr. William Nguyen", "specialty": "Infectious Disease Specialist" },
+                { "name": "Dr. Marlinda Thomas", "specialty": "Infectious Disease Specialist" }
+            ],
+            "appointments": [
+                { "date": "2024-07-22", "doctor": "Dr. Olivia Rodriguez", "time": "9:45 AM" },
+                { "date": "2024-08-12", "doctor": "Dr. William Nguyen", "time": "2:00 PM" }
+            ]
+        }
+    ]
+
+    // const jsonString = `[ /* paste the corrected JSON here */ ]`;
+    //const hospitalData = JSON.parse(medicialData);
+    //
+
+
+    function getDataByPropertyOrValue(data, searchTerm, parentData = null) {
+        const normalizedSearchTerm = searchTerm.toLowerCase();
+
+        const department = parentData?.department; // Get department from parent, if available
+        const phone = parentData?.phone; // Get phone from parent, if available
+        console.log(parentData)
+        if (Array.isArray(data)) {
+            for (const entry of data) {
+
+                const result = getDataByPropertyOrValue(entry, searchTerm, {department, phone}); // Pass department and phone to child call
+                if (result) {
+                    return result; // Return the result if found
+                }
+            }
+        } else if (typeof data === "object") {
+            for (const [key, value] of Object.entries(data)) {
+                if (typeof value === "string" && value.toLowerCase().includes(normalizedSearchTerm)) {
+                    return {
+                        department,
+                        phone,
+                        ...data
+                    };
+                } else {
+                    const result = getDataByPropertyOrValue(value, searchTerm, {department, phone}); // Pass department and phone to child call
+                    if (result) {
+                        return result; // Return the result if found
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+
+    function getDataByPartialProperty(medicalData, propertyName, partialValue) {
+        // Convert both propertyValue and entry[propertyName] to lowercase for case-insensitive matching
+        const matchingEntry = medicalData.find(entry => {
+            const entryValue = entry[propertyName]?.toLowerCase(); // Handle missing properties
+            return entryValue && entryValue.includes(partialValue.toLowerCase());
+        });
+
+        if (matchingEntry) {
+            return matchingEntry;
+        } else {
+            console.log("No data found for property:", propertyName, "containing value:", partialValue);
+            return null;
+        }
+    }
+
+
+    function getEntryByProperty(medicalData, propertyName ="department", propertyValue) {
+        // Use the find method to directly get the matching entry
+        const property = propertyName.replace("Page","");
+        //const matchingEntry = medicalData.find(entry => entry[property] === propertyValue);
+        const matchingEntry = medicalData.find(entry => {
+            const entryValue = entry[propertyName]?.toLowerCase(); // Handle missing properties
+            return entryValue && entryValue.includes(partialValue.toLowerCase());
+        });
+
+        if (matchingEntry) {
+            console("found")
+            return matchingEntry;
+        } else {
+            console.log("No data found for property:", property, "with value:", propertyValue);
+            return null; // Indicate that no matching entry was found
+        }
+    }
+
+
+    const oncologyDepartment = medicalData.find(dept => dept.department === "Oncology");
+
+        console.log("Oncology Department Phone Number:", oncologyDepartment.phone);
+        //medicialData.department.oncology
+
+    // if deptPage send slot
+     function getDepartmentData(departmentName) {
+        const filteredData = medicalData.filter(entry => entry.department === departmentName);
+
+        if (filteredData.length > 0) {
+            console.log(filteredData[0]);  // Log the first matching entry
+        } else {
+            console.log("No data found for department:", departmentName);
+        }
+    }
+
+    //
+    // if deptPage send slot  if (function.name.includes('deptPage')) { getDocData(function.name.arguments.slot) }
+
+    // if docPage send slot  if (function.name.includes('docPage')) { getDocData(function.name.arguments.slot) }
+    // function getDocData(doctor) {
+    //     const thisDoc = doctor.toLowerCase();
+    //
+    //     for (const department of medicalData) {
+    //         const matchingDoctor = department.doctors.find(doctor =>
+    //             doctor.name.toLowerCase().includes(thisDoc)
+    //         );
+    //
+    //         if (matchingDoctor) {
+    //             return {
+    //                 department: department.department,
+    //                 phone: department.phone,        // Include phone number
+    //                 doctor: matchingDoctor.name,
+    //                 specialty: matchingDoctor.specialty // Include specialty
+    //             };
+    //         }
+    //     }
+    //
+    //     return null; // Return null if no match is found
+    // }
+
+
+    function getDocData(doctor, property = null) {
+        const thisDoc = doctor.toLowerCase();
+
+        for (const department of medicalData) {
+            const matchingDoctor = department.doctors.find(d =>
+                d.name.toLowerCase().includes(thisDoc)
+            );
+
+            if (matchingDoctor) {
+                if (property) {
+                    // If a property is specified, return only that property and the doctor's name
+                    return {
+                        doctor: matchingDoctor.name,
+                        [property]: department[property] // Dynamically access the property
+                    };
+                } else {
+                    // If no property is specified, return all the information
+                    return {
+                        department: department.department,
+                        phone: department.phone,
+                        doctor: matchingDoctor.name,
+                        specialty: matchingDoctor.specialty
+                    };
+                }
+            }
+        }
+
+        return null;
+    }
+
+
+
+
+    // Example Usage:
+    // getDepartmentData("Oncology");
+    // getDepartmentData("Internal Medicine");
+    // console.log(" ---->",getDocData("Rodriguez"));
+
+
+   function showLog() {
+
+       const toggleSwitch = document.getElementById("toggle");
+       if (toggleSwitch.checked) {
+           return true;
+       }
+       return false;
+   }
+</script>
+    <script src="/js/voice.js"></script>
+</div>
+</body>
+
+</html>

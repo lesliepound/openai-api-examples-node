@@ -32,6 +32,50 @@
         }
 
     </style>
+<script>
+    let currentSlideIndex = 0;
+    let deckData = null;
+
+    function displaySlide(index) {
+        const slide = deckData.pages[index];
+        const contentDiv = document.getElementById('content');
+
+        if (slide.type === 'story') {
+            contentDiv.innerHTML = slide.content;
+            // Automatically move to the next slide (or option)
+            setTimeout(() => {
+                currentSlideIndex++;
+                displaySlide(currentSlideIndex);
+            }, slide.timer * 1000);
+        } else if (slide.type === 'options') {
+            contentDiv.innerHTML = slide.content + '<br>';
+        }
+    }
+
+
+    async function loadDeck(startingSlideId = null) {
+        const response = await fetch('/story.json');
+        deckData = await response.json();
+
+        if (startingSlideId) {
+            currentSlideIndex = deckData.pages.findIndex(p => p.id === startingSlideId);
+            if (currentSlideIndex === -1) {
+                console.error('Invalid starting slide ID');
+                currentSlideIndex = 0; // Fallback to the first slide
+            }
+        }
+        displaySlide(currentSlideIndex);
+    }
+
+    // ... (rest of the displaySlide function remains the same)
+
+    // Get starting slide ID from URL (if provided)
+    const urlParams = new URLSearchParams(window.location.search);
+    const startingSlideId = urlParams.get('start');
+
+    loadDeck(startingSlideId);
+
+</script>
 </head>
 <body>
 
@@ -44,7 +88,7 @@ Here OpenAI is connecting to one of three functions returning only JSON keywords
 You can use this to extract key concepts from chat text.
 You could then create a formal query and call a database function,
 showing those results.</p>
-
+-the prompt (voice) is sent to openAI along with tools and the right on is formaated with values
 <h3>This Demo</h3>
 Here are the different options in this example. <i> If you're familar with conversational intents, this is similar.</i>
 
@@ -75,7 +119,6 @@ Try these examples.
 
         sendButton.addEventListener('click', async () => {
             let userInput = inputText.value.trim();
-
             try {
                 const response = await fetch('/apps/openai-funcs', {
                     method: 'POST',
@@ -85,7 +128,7 @@ Try these examples.
 
 
                 const results = await response.json();
-
+console.log(results)
                 const outputText = document.querySelector(".outputText");
                 outputText.style.visibility = "visible"
                 //outputText.textContent = results

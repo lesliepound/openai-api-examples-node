@@ -1,0 +1,95 @@
+[
+  {
+    "department": "Cardiology",
+    "phone": "(626) 555-1212",
+    "doctors": [
+      { "name": "Dr. Elizabeth Davis", "specialty": "Cardiologist" },
+      { "name": "Dr. Michael Chen", "specialty": "Interventional Cardiologist" }
+    ],
+    "appointments": [
+      { "date": "2024-07-15", "doctor": "Dr. Elizabeth Davis", "time": "10:00 AM" },
+      { "date": "2024-08-02", "doctor": "Dr. Michael Chen", "time": "2:30 PM" }
+    ]
+  },
+  {
+    "department": "Pediatrics",
+    "phone": "(626) 555-3456",
+    "doctors": [
+      { "name": "Dr. Sarah Johnson", "specialty": "Pediatrician" },
+      { "name": "Dr. David Lee", "specialty": "Pediatric Endocrinologist" }
+    ],
+    "appointments": [
+      { "date": "2024-07-08", "doctor": "Dr. Sarah Johnson", "time": "9:30 AM" },
+      { "date": "2024-07-29", "doctor": "Dr. David Lee", "time": "4:00 PM" }
+    ]
+  },
+  {
+    "department": "Orthopedics",
+    "phone": "(626) 555-7890",
+    "doctors": [
+      { "name": "Dr. Robert Wilson", "specialty": "Orthopedic Surgeon" },
+      { "name": "Dr. Maria Garcia", "specialty": "Sports Medicine Physician" }
+    ],
+    "appointments": [
+      { "date": "2024-07-10", "doctor": "Dr. Robert Wilson", "time": "11:30 AM" },
+      { "date": "2024-08-19", "doctor": "Dr. Maria Garcia", "time": "1:45 PM" }
+    ]
+  },
+    {
+      "department": "Dermatology",
+      "phone": "(626) 555-2345",
+      "doctors": [
+      { "name": "Dr. PD James", "specialty": "Generalist" },
+                        { "name": "Dr. Crandle Lee", "specialty": "Cosmetic Dermatologist" }
+                    ],
+      "appointments": []
+    },
+    {
+      "department": "Radiology",
+      "phone": "(626) 555-6789",
+      "doctors": [Cardiovascular radiology],
+      "appointments": []
+    },
+     {
+       "department": "Oncology",
+       "phone": "(626) 555-1122",
+       "doctors": [
+         { "name": "Dr. Emily Carter", "specialty": "Oncologist" },
+         { "name": "Dr. Daniel Kim", "specialty": "Hematologist-Oncologist" }
+       ],
+       "appointments": [
+         { "date": "2024-07-18", "doctor": "Dr. Emily Carter", "time": "11:00 AM" },
+         { "date": "2024-08-05", "doctor": "Dr. Jay Gupta", "time": "3:15 PM" }
+       ]
+     },
+    {
+      "department": "Internal Medicine",
+      "phone": "(626) 555-3344",
+      "doctors": [
+        { "name": "Dr. Olivia Rodriguez", "specialty": "Internist" },
+        { "name": "Dr. William Nguyen", "specialty": "Infectious Disease Specialist" }
+      ],
+      "appointments": [
+        { "date": "2024-07-22", "doctor": "Dr. Olivia Rodriguez", "time": "9:45 AM" },
+        { "date": "2024-08-12", "doctor": "Dr. William Nguyen", "time": "2:00 PM" }
+      ]
+    },
+    {
+    "department": "Podiatry",
+    "phone": "(626) 555-5678",
+    "doctors": [
+      { "name": "Dr. Jessica Patel", "specialty": "Podiatrist" }
+    ],
+    "appointments": [
+      { "date": "2024-07-16", "doctor": "Dr. Jessica Patel", "time": "10:30 AM" }
+    ]
+    },
+    {
+      "department": "Gynecology",
+      "phone": "(626) 555-9012",
+      "doctors": [{ "name": "Dr. M. Lee", "specialty": "Podiatrist" }],
+      "appointments": [
+         { "date": "2024-07-16", "doctor": "Dr. Sunil Manna", "time": "10:30 AM" }
+         ]
+    }
+]

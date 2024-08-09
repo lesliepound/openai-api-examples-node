@@ -1,0 +1,246 @@
+
+There are many ways to create a Gen AI solution. A Gen AI solutions works with an LLM or model
+like this  or this or this.
+
+ An LLM is like a dune bugger in a desert you can go anywhere.
+But often we want to couple the extrodinary language understanding with a more
+ directed experience like a chat bot, educational lesson or guide.
+
+The folks creating recipes, skills and scripts for Alexa, Google's Smart Speaker
+ chatbots online and on the phone have been thinking about human language for a decade.
+ They used a concept called "intents" specifically to create guided experiences for
+ human langauge interfaces.
+
+Intents are labels for a fucntionality that correspond to a
+ sentiment from a user . For example, a user might say "good morning", "hello", "yo, wassup" but the
+  but all these different ways of saying something map to the same functionality.
+   So we create an intent is created connecting to the greeting function in the code.
+Before generative AI , systems trained on each intent and developers gave many examples of possible
+user phrases that might match the every intent in your system.
+
+Now we have LLMs with the langauge understanding built in for almost anything we might want.
+
+So how do developers "attach"  user intentions with code to creat directed expereinces.
+
+With LLMS there is soemthing called a "tools" interface that
+many model APIs make available  to capture user speech and map it to fucntiionality.
+
+So like prompt engineering, developers need to learn the naunce of the
+model to any kind of consistency of response.
+
+This is an example.
+
+Here, I wanted to see if I could automatic generate intents for an LLMs.
+This code shows a bit more than autogenerating intents.
+It uses a JSON model to map the directed expereince or directed options.
+
+-----
+
+
+This demo shows a method for automatically generating "intents" from a JSON file
+with one  hint per page.
+
+I have a couple examples.
+
+The dialog lets you choose an LLM
+
+GPT
+to the rain forest
+I want to embrace him
+Ok. fine I'll take him to caltech.
+
+---
+
+show adding an option to the file
+ Take my monster to see Dr. Phil
+
+
+Mixtrail
+Turn on response back
+Does Dr Daniel work there?
+What's the phone for Rodriguez I think.  I forget the exact name
+Show me appoints in oncology
+
+
+In directed convesations like chatbots and lessosn, the demo shows how the
+"guidance" that is pre-wrriten can be turned into intents that the LLM can map.
+In stead of developers have to writew new intents are every sinlge application, this method allows for dyamic tools creating that
+maps user language to the next part of the chat bot, or lesson or story.
+
+
+Traditionally intents
+Here I ..
+
+I am using the API featute called tools "intents" genearted on the fly. In traditional conversational
+design intents
+
+
+In traditional conversational design intents ...This demo uses the  NLU feature from OPenAI's LLM to
+a demo showing a node server connected to GenAI API to
+with changing
+
+Gen AI Solutions have 3 parts
+the model + the interface  + the channels/extras + you
+
+Gen AI Solutions genrtally have  3 parts : What the user saus, what the AI says and
+the solluting part where a developer takes the pieces and directs it a targeted solution.
+This is a demo of "auto-building" of  a chatGoy, a lesson or guide with an LLM model
+
+I am using the API fearue called tools "intents" genearted on the fly. In traditional conversational
+design intents
+
+At the 10ft level, en AI accomplishes 3 things
+ 1) understanding and respond language. We call this natural language understadning of  NLU.
+ 2) creating or gathering words to creat questions with generatid content
+ 3) Allowing servives and strcuturing of the engament via an API
+
+
+
+demonstrate dynamic intents
+In directed convesations like chatbots and lessosn, the demo shows how the "guidance" that is pre-wrriten can be turned into intents that the LLM can map.
+In stead of developers have to writew new intents are every sinlge application, this method allows for dyamic tools creating that
+maps user language to the next part of the chat bot, or lesson or story.
+
+In other words, the LLM figures which of your available tools to call from a user promtps.
+"Tools" sometimes called functions add a set of abilities to your conversation.
+So if a developer adds a set of tools to be called if certain conditions are met.
+There are a lot uses for "directed" conversations. Chatbots or Lessons,
+auditory only or visual exeperiencs can all use this technology to So the "tools"
+
+json
+
+
+-test page by color
+-test slot.. make sure it works with some slots .intermittant
+-write video script
+
+ask about next...
+- images vs diff chats  scroll vs log
+-chat scrool vs chat as wipe
+-hints
+
+[x] swipe input after retreived
+dynamic intents  (for disparate options, for like options)
+mention or do? opttional concepts as keyword - does it improve wi
+mention or do? slot filing
+mention or do? fallbacks
+
+
+a hint is appended to the text in the left side ubble.
+
+Lets talk about conversational AI pre Generative AI.
+Conversational AI was the techonology for Siri, and Alexa and Google Go?
+Is conversation AI the same as generative AI. Not exactly. But we casn use some of the
+same methods.
+Many of those concepts are applicable in this world but applied differently.
+This demo focuses on one of those concepts "intents".
+In any system based on naturallanguage, users will say the same thing very differenlty.
+examples..
+the fact that this and that mean the same thing mean we need another way to captue this fact.
+So when a user says soemthing in multiple ways, we need an intent you to represent that fucntionality
+Intents are usually trained in AI.  Hi, hello, good moringin, howdy are all greetings.
+So we make a greeting intent. When they intent is triggerred however it gets triggered when want the system to come back with a greeting
+
+The old way developers mapped a series of examples to each intent . This is oftne still used LLMs
+So we could go further if our options are similar and may confused by sending an additional set of concepts with a rpomt.
+These concepts dont have to complete. You can simply them to the prompt.
+Or be more xplict in the system prompt
+Consider any concepts attached to this  user question, espieally in times wjere more than 1 anser fits.
+
+
+     "options": [
+      {
+        "option": "What is the phone number for this department",
+         "concepts" :  ["department", "hr","internal","radiation"]
+        "nextSlideId": "page10"
+      },
+      {
+              "option": "What is the phone number for this location",
+               "concepts" :  ["center", "address","main"]
+              "nextSlideId": "page10"
+      },
+
+      Fallback and Slots
+
+      Slots
+
+      -----------
+
+      This is a little demo allowing the
+
+Dynamic Generatation of Intents
+With filling slots
+Collapse to Enumerated Types
+
+
+JSON
+Model that allows for directed conversations
+Auto generate intents
+Ability to do slot filling
+
+-imagary
+-voice in or out or both
+-fallbacks/hint
+
+this is a demo using gerative AI to demonstrate how we can build
+some fucntioncal systems with a more directed experience. So a chat bot
+or a lesson, or guide or flashcards then can be visual,auitory or both
+
+Specifically we are looking at using a method from the conversation AI
+world with a LLM. This was a quick demo to build, but there are many things
+agoins on here.
+
+Its my belief that just as everyone today in marketing and knows when the;r being played or moked.
+We can get to the point where we all can create system digital landscpae and how it works.
+
+Although LLMs are great fun as stand alone paltforms, for a lot of business and eduction
+use cases we need a more directed experince. An LLM by itslef is like being a wide open landscape with a dune buggy.
+You can go anywhere and that means you can go anywehere.. you stumble into gossip gulley, misrepresenation mountains and othr hazard.
+And there are no signs.
+
+Working as an LLM as more of a foundation building roads ontop of it we creata a more directed experience.
+
+Conversaional designers and developers, and tinkerer this will give you the beinngins of
+an explantion of how to build a directed expeience on top of an LLM.
+
+There is no voice a graphics in this demo. We'll build that in the next version.
+
+As we go through this video. This is what you need to know. We areborrowing ftom the conversaional AI world with :"intents" The
+system will autmotically genrate all the intent matching with one example for each intent.
+
+An intent is a label we put on a functionality that can be invoked by trainging. So in tradtional systems
+you'd say hello, hoedy,good mornign, you, wassup afternoon would be examples of a greeting.
+Greeting is out intent and made the label greeting to some fucntionality we want like a welcome.
+
+So let's look at this in action.
+
+We will start with a typical chatbot.
+
+
+There is only 1 prompt  1 example for every intent  in the system.
+
+
+  1. We are using a JSON file to keep content.
+
+                  2. Conversational vs Generative AI
+                  3. Intents in Generative AI - Why is this important?
+                  4. Slot filling - Why is this important?
+                  4. The best of all worlds
+
+
+      Here's a little demo I built using ...
+      Here are some things to note.
+      Chatbots , Lessons,  Guides , Stories, are all directed experiences.
+      They can use generated content
+
+                  This demo is an illustration for 4 aspects
+
+
+                  features
+                  user prompt was similar to example
+                  user prompt used an instance
+                  user prompt had slots
+
+
+
+

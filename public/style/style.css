@@ -3,89 +3,64 @@ a:visited { color: purple;}
 a:hover   { color: blueviolet;}
 a:active  { color: mediumpurple;}
 
-body {
-    font-family: Poppins;
+.mic-button {
+    margin-left: 25px;
+    width: 50px;
+    height: 50px;
+    background-color: #cc0000; /* Red */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Add box-shadow transition */
 }
+
+/* Microphone Icon (Replace with your preferred icon method) */
+.mic-button::before {
+    content: '\1F3A4'; /* Unicode for microphone icon */
+    font-size: 24px;
+    color: white;
+}
+
+/* Glowing Effect when "on" */
+.mic-button.on {
+    background-color: #ff3333; /* Brighter red */
+    box-shadow: 0 0 10px 5px #ff3333; /* Red glow */
+}
+
+
+montserrat-norm {
+                 font-family: "Montserrat", sans-serif;
+                 font-optical-sizing: auto;
+                 font-weight: 500;
+                 font-style: normal;
+             }
+#main { margin-left: auto;
+    margin-right: auto; width:700px}
+section {margin-left: auto;
+    margin-right: auto;}
+
+td.head {font-weight: 800}
+
+body {
+    padding:5px;
+    font-family: "Montserrat", sans-serif;
+}
+
+
 main {
     max-width: 90%; /* Use viewport percentage for responsiveness */
     margin: 0 auto; /* Center content horizontally */
 }
 
 .intro { margin: 0 auto; padding:1.4rem}
-.cards {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around; /* Adjust spacing as desired */
-}
-
-.card {
-    width: 300px; /* Adjust width as needed */
-    margin: 10px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.card img {
-    width: 100%;
-    height: 200px;
-    object-fit: contain;
-}
-
-.card h2 {
-    margin-top: 10px;
-}
 
 
-#audio-player {
-    display: none;
-}
 
-.input-output-container, .rightBubble {
-    position: relative;
-    background: #9ce1e8;
-    border-radius: .4em;
-    margin-top: .8em;
-    padding: 10px;
-    width: 98%;
-    max-width:500px;
-}
-
-.input-output-container:after {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    width: 0;
-
-    height: 0;
-    border: 0.625em solid transparent;
-    border-right-color:   rgba(60, 225, 232, .2);
-    border-left: 0;
-    border-bottom: 0;
-    margin-top: -0.312em;
-    margin-left: -0.625em;
-}
-
-
-.rightBubble:after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 50%;
-    width: 0;
-    height: 0;
-    border: 20px solid transparent;
-    border-left-color: #9ce1e8;
-    border-right: 0;
-    border-bottom: 0;
-    margin-top: -10px;
-    margin-right: -15px;
-}
 
 #input-text {
-    background: #9ce1e8;
+    background: #ccd6cf;
     border-radius: 0em;
     border: 0px;
     width: 99%
@@ -98,11 +73,397 @@ input, textarea , ::placeholder {
     font-size:1em;
 }
 
-.leftBubble {
-    background: rgba(60, 225, 232, .3);
-}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
-    .card {
-        width: 100%; /* Make cards full-width on smaller screens */
+    .column {
+        flex: auto; /* Allow columns to take their natural width on smaller screens */
+        width: 100%; /* Make columns full width on smaller screens */
+    }
+} /* <-- Added missing closing curly brace */
+
+.left, .right {
+    padding: 10px;
+}
+
+#explain {
+    background-size: 390px 390px;
+    background: url("/assets/postit.png");
+    width: 390px;
+    height: 390px;
+    padding-top: 25px;
+}
+
+.option {
+    padding: 25px 5px 5px 65px;
+    opacity: 0; /* Start hidden */
+    animation: fadeIn 1.6s forwards; /* 2-second fade-in animation */
+}
+
+.option.delay-0 {
+    animation-delay: 900ms;
+}
+
+.option.delay-1 {
+    animation-delay: 1800ms;
+}
+
+.option.delay-2 {
+    animation-delay: 1700ms;
+}
+
+.option.delay-3 {
+    animation-delay: 2600ms;
+}
+
+.option.delay-4 {
+    animation-delay: 4500ms;
+}
+
+.option.delay-5 {
+    animation-delay: 5400ms;
+}
+
+/* Add more delay classes as needed */
+
+@keyframes fadeIn {
+    to {
+        opacity: 1; /* End fully visible */
     }
 }
+
+.over {
+    font-style: italic;
+    color: #666
+}
+
+.peak {
+    transform: skew(-40deg, 10deg);
+    transform: rotateX(9deg) rotateY(345deg);
+    transform-style: preserve-3d;
+}
+
+.section {max-width: 690px}
+
+
+.circle-button {
+    margin-left:25px;
+    width: 50px;            /* Adjust size as needed */
+    height: 50px;
+    background-color: #007bff; /* Customize background color */
+    border-radius: 50%;
+    display: flex;           /* Center the symbol */
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;        /* Change cursor to pointer on hover */
+    transition: background-color 0.3s ease; /* Add smooth transition for hover effect */
+}
+
+.circle-button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+.symbol {
+    font-size: 24px;      /* Adjust symbol size as needed */
+    color: white;         /* Customize symbol color */
+    font-weight: bold;
+
+}
+.left-bubble {
+    padding: 25px 5px 10px 25px;
+    position: relative;
+    background: #cbe0e2;
+
+    border-radius: .4em;
+    margin-bottom:10px;
+    min-height:70px;
+}
+
+
+.left-bubble:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 0.531em solid transparent;
+    border-right-color: #cbe0e2;
+    border-left: 0;
+    border-bottom: 0;
+    margin-top: -0.266em;
+    margin-left: -0.531em;
+
+
+}
+
+.right-bubble:empty {display:none;}
+
+.right-bubble:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 0.533em solid transparent;
+    border-left-color: #ccd6cf;
+    border-right: 0;
+    border-bottom: 0;
+    margin-top: -0.281em;
+    margin-right: -0.562em;
+}
+
+.right-bubble {
+    position: relative;
+    background: #ccd6cf;
+    padding: 10px;
+    border-radius: .4em;
+}
+
+.left-bubble:before {
+    font-family: Impact;
+    padding:3px;
+    color: #999;
+    font-size: .9em;
+    position: absolute;
+    position: absolute;
+    content: attr(model);
+    top: 12px;
+    left: -86px;
+    border-radius: 4px;
+
+}
+
+.right-bubble:before {
+    font-family: Impact;
+    padding:3px;
+    color: #999;
+    font-size: .9em;
+    position: absolute;
+    content: "You";
+    top: 25px;
+    left: 720px;
+    border-radius: 4px;
+
+
+}
+
+@media only screen and (max-width: 740px) {
+
+    .left-bubble:before {
+        font-family: Impact;
+        padding:3px;
+        color: azure;
+        font-size: .9em;
+        position: absolute;
+        content: attr(model);
+        top: -15px;
+        left: 26px;
+        border-radius: 4px;
+        background-color: #666;
+
+    }
+
+    .left-bubble:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        border: 20px solid transparent;
+        border-bottom-color: #cbe0e2;
+        border-top: 0;
+        border-left: 0;
+        margin-left: -337px;
+        margin-top: -7px;
+        rotate: 47deg;
+    }
+
+
+    .right-bubble:before {
+        font-family: Impact;
+        padding:3px;
+        color: azure;
+        font-size: .9em;
+        position: absolute;
+        content: "you";
+        top: -15px;
+        left: 645px;
+        border-radius: 4px;
+        background-color: #666;
+
+    }
+
+    .right-bubble:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border: 14px solid transparent;
+        border-bottom-color: #ccd6cf;
+        border-top: 0;
+        border-right: 0;
+        margin-left: 324px;
+        margin-top: -6px;
+        rotate: -52deg;
+    }
+
+}
+
+
+body {
+    padding: 1rem; /* 1rem is roughly equal to 16px */
+    box-sizing: border-box; /* Ensures padding doesn't affect the total width/height */
+}
+
+@media (min-width: 768px) {
+    /* Adjust breakpoint as needed */
+    body {
+        padding: 2rem; /* Increase padding for larger screens */
+    }
+}
+
+.demo-intro {
+    font-family: "Sriracha", cursive;
+    font-weight: 400;
+    font-style: normal;
+    display:none;
+}
+
+.header {    color: #999;
+    display:inline-block;
+    font-size: .9em;
+    font-style: italics;
+}
+
+.slide{height: auto}
+
+.button-group {
+    margin-left:25px;
+    display: inline-flex; /* Use flexbox for layout */
+}
+
+.example {
+    background-color: #e0e0e0; /* Default background color */
+    maring-left:1px;
+    display:inline-block;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.example:hover {
+    background-color: #ccc; /* Hover effect */
+}
+
+.example.active {
+    background-color: #007bff; /* Active state color */
+    color: white;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%}
+
+/* The Close Button */
+.close-button {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#send-button {margin:6px;}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px; /* Adjust width as needed */
+    height: 34px; /* Adjust height as needed */
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px; /* Rounded edges */
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+
+input:checked + .slider:before {
+    transform: translateX(26px); /* Move thumb to the right on checked */
+}
+
+
+#log {padding: 4px;
+    background-color: #ddd;
+    margin-top: 10px;
+    border: 1px solid #999;
+    font-size: .8em;
+    max-width: 700px;
+    color: #444;
+    font-family: system-ui;
+    display:block;
+    }
+
+
